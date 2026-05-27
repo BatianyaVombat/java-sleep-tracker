@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SleepStatLoader {
-    private final DateTimeFormatter DATE_TIME_FORMATER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
     public List<SleepingSession> load(String path) {
         try (Stream<String> lines = Files.lines(Path.of(path), StandardCharsets.UTF_8)) {
@@ -40,8 +40,8 @@ public class SleepStatLoader {
         String quality = tempArray[2];
 
         try {
-            LocalDateTime dtStart = LocalDateTime.parse(start, DATE_TIME_FORMATER);
-            LocalDateTime dtEnd = LocalDateTime.parse(end, DATE_TIME_FORMATER);
+            LocalDateTime dtStart = LocalDateTime.parse(start, dateTimeFormatter);
+            LocalDateTime dtEnd = LocalDateTime.parse(end, dateTimeFormatter);
             SleepQuality sleepQuality = SleepQuality.valueOf(quality);
             return Optional.of(new SleepingSession(dtStart, dtEnd, sleepQuality));
 
