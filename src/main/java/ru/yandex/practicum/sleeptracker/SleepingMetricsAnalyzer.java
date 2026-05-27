@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SleepingMetricsAnalyzer {
     private final List<SleepingSession> sessions;
@@ -88,14 +89,22 @@ public class SleepingMetricsAnalyzer {
             return "Недостаточно данных";
         }
 
+        List<SleepingSession> healthySessions = sessions.stream()
+                .filter(s -> !s.isSleeplessNight())
+                .toList();
+
+        if (healthySessions.isEmpty()) {
+            return "Недостаточно данных";
+        }
+
         //среднее время начала сессии в секундах
-        double avrStartTimeInSec = sessions.stream()
+        double avrStartTimeInSec = healthySessions.stream()
                 .mapToDouble(s -> s.getSessionStart().toLocalTime().toSecondOfDay())
                 .average()
                 .orElse(0.0);
 
         //среднее время окончания сессии в секундах
-        double avrEndTimeInSec = sessions.stream()
+        double avrEndTimeInSec = healthySessions.stream()
                 .mapToDouble(s -> s.getSessionEnd().toLocalTime().toSecondOfDay())
                 .average()
                 .orElse(0.0);

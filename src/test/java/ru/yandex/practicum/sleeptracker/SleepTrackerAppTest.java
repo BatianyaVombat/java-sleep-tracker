@@ -163,7 +163,7 @@ public class SleepTrackerAppTest {
     @DisplayName("Тест 12: Определение хронотипа. Однозначный Жаворонок")
     public void shouldReturnDefinitelyAnEarlyBird() {
         sessions.add(createSession(LocalDateTime.of(2026, 5, 25, 21, 0),
-                LocalDateTime.of(2025, 5, 26, 6, 0), SleepQuality.GOOD));
+                LocalDateTime.of(2026, 5, 26, 6, 0), SleepQuality.GOOD));
 
         Assertions.assertEquals("Ваш хронотип - Жаворонок", sMa.getChronotype());
     }
